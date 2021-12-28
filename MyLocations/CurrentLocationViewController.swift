@@ -29,6 +29,8 @@ class CurrentLocationViewController: UIViewController {
     var lastGeocodingError: Error?
     var isReverseGeocoding = false
     
+    var timer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateLabels()
@@ -37,7 +39,6 @@ class CurrentLocationViewController: UIViewController {
     func updateLabels() {
         // If we have a location, update UI
         if let location = currentLocation {
-            messageLabel.text = ""
             let latitude = location.coordinate.latitude
             let longitude = location.coordinate.longitude
             
@@ -63,6 +64,7 @@ class CurrentLocationViewController: UIViewController {
             }
             
             addressLabel.text = addressResult
+            messageLabel.text = isUpdatingLocation ? "Updating..." : ""
         }
         // If not, check error codes
         else {
@@ -95,9 +97,7 @@ class CurrentLocationViewController: UIViewController {
             messageLabel.text = statusMessage
         }
         
-        getLocationButton.setTitle(
-            isUpdatingLocation ? "Stop" : "Get My Location",
-            for: .normal)
+        configureGetLocationButton()
     }
     
     func getAddressFromPlacemark(from placemark: CLPlacemark) -> String {
@@ -127,6 +127,21 @@ class CurrentLocationViewController: UIViewController {
         return lineOne + "\n" + lineTwo + "\n" + lineThree
     }
     
+    @IBAction func getLocation(_ sender: Any) {
+        if isUpdatingLocation {
+            print("User Pressed Stop")
+            stopLocationManager()
+            updateLabels()
+        } else {
+            currentLocation = nil
+            lastLocationError = nil
+            lastPlacemark = nil
+            lastGeocodingError = nil
+            startLocationManager()
+        }
+        
+    }
+    
     func startLocationManager() {
         let authStatus = locationManager.authorizationStatus
         print("Authorization Status: ", authStatus.rawValue)
@@ -145,6 +160,12 @@ class CurrentLocationViewController: UIViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
             isUpdatingLocation = true
+            timer = Timer.scheduledTimer(
+                timeInterval: 60,
+                target: self,
+                selector: #selector(timeout),
+                userInfo: nil,
+                repeats: false)
         }
     }
     
@@ -152,19 +173,23 @@ class CurrentLocationViewController: UIViewController {
         if isUpdatingLocation {
             locationManager.stopUpdatingLocation()
             locationManager.delegate = nil
-            self.isUpdatingLocation = false
+            isUpdatingLocation = false
+            if let timer = timer {
+                timer.invalidate()
+            }
         }
     }
     
-    @IBAction func getLocation(_ sender: Any) {
-        if isUpdatingLocation {
+    @objc func timeout() {
+        print("***TIMEOUT***")
+        if currentLocation == nil {
             stopLocationManager()
-        } else {
-            currentLocation = nil
-            lastLocationError = nil
-            startLocationManager()
+            lastLocationError = NSError(
+                domain: "MyLocationsTimeout",
+                code: 1,
+                userInfo: nil)
+            updateLabels()
         }
-        updateLabels()
     }
     
     func configureGetLocationButton() {
@@ -199,9 +224,8 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
         }
         
         self.lastLocationError = error
-        self.updateLabels()
         self.stopLocationManager()
-        
+        self.updateLabels()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -218,24 +242,36 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
             return
         }
         
+        var distance = CLLocationDistance(Double.greatestFiniteMagnitude)
+        if let location = currentLocation {
+            distance = newLocation.distance(from: location)
+        }
         /*
-         If it's more accurate than the current location
-         and within location manager's desired accuracy, we are done
+         If it's
+             1. more accurate than the current location, or
+             2. within location manager's desired accuracy, or
+             3. not changing in distance from previous location
+         we are done.
          */
-        print("\n>>>---Accuracy Test---")
-        print(newLocation.horizontalAccuracy)
-        print(locationManager.desiredAccuracy)
-        print("---Accuracy Test--->>>\n")
+        // 1.
         if currentLocation == nil ||
             currentLocation!.horizontalAccuracy > newLocation.horizontalAccuracy {
             
             lastLocationError = nil
             currentLocation = newLocation
             
+            // 2.
             if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+                print("Stopped because accuracy reached!")
                 stopLocationManager()
             }
             updateLabels()
+            
+            // Use this to override previous geocoding, if it's taking place,
+            // so we always get the address for the latest coordinate.
+            if distance > 0 {
+                isReverseGeocoding = false
+            }
             
             if !isReverseGeocoding {
                 isReverseGeocoding = true
@@ -254,5 +290,15 @@ extension CurrentLocationViewController: CLLocationManagerDelegate {
                 }
             }
         }
+        // 3.
+        else if distance < 10 {
+            let timeInterval = newLocation.timestamp.timeIntervalSince(currentLocation!.timestamp)
+            if timeInterval > 10 {
+                print("Stopped updating location: Location not changing for over 10s")
+                stopLocationManager()
+                updateLabels()
+            }
+        }
+        print("Distance from prev location: \(distance)")
     }
 }

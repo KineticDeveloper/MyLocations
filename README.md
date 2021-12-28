@@ -12,9 +12,26 @@
 
 
 ### Error Handling
+GPS services is prone to errors. Use an instance variable to store any errors received from delegate. Then, make sure the following are taken care of:
+
+1. Location services restricted from error code
+2. Location services restricted from CLLocationManager
+3. Currently updating location, waiting for more accurate results
+4. First time using the app. Tap 'Get My Location' to Start".
 
 
 ### Reverse Geocoding (CLGeocoder)
+Setup instance variables to store current state, errors, and results.
+ 
+- use geoCoder.reverseGeocodeLocation to decode and handle results and errors.
+- update UI based on error code and results. 
+
+### Improving results
+
+- If accuracy is not within desired accuracy, see if the locations move within 10 meters in 10 seconds. If so, update address and done. 
+
+- Add a timeout timer if we are waiting too long for a result. 
+
 
 
 
