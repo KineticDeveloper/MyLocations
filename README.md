@@ -32,6 +32,13 @@ Setup instance variables to store current state, errors, and results.
 
 - Add a timeout timer if we are waiting too long for a result. 
 
+#### Short Summary
+
+- A lot of work is done to make sure that the UI is updated appropriately depending on the state of location update, and reverse geocoding. To account for different errors and the delays for accurate results, we need instance variables to keep track of these changes.
+-  The updateLabels() function is called whenever we need to update the UI and it looks at the state of the instance variables to decide what to display
+
+---
+
 
 
 
