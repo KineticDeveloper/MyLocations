@@ -14,6 +14,8 @@
 		5079BE95277A6841002D8A7D /* MyLocations.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5079BE93277A6841002D8A7D /* MyLocations.xcdatamodeld */; };
 		5079BE97277A6842002D8A7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5079BE96277A6842002D8A7D /* Assets.xcassets */; };
 		5079BE9A277A6842002D8A7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5079BE98277A6842002D8A7D /* LaunchScreen.storyboard */; };
+		5079BEA2277CAB94002D8A7D /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEA1277CAB94002D8A7D /* LocationDetailsViewController.swift */; };
+		5079BEA4277CE5DC002D8A7D /* CategoryPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEA3277CE5DC002D8A7D /* CategoryPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		5079BE96277A6842002D8A7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5079BE99277A6842002D8A7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5079BE9B277A6842002D8A7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5079BEA1277CAB94002D8A7D /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
+		5079BEA3277CE5DC002D8A7D /* CategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +65,10 @@
 				5079BE8A277A6841002D8A7D /* AppDelegate.swift */,
 				5079BE8C277A6841002D8A7D /* SceneDelegate.swift */,
 				5079BE8E277A6841002D8A7D /* CurrentLocationViewController.swift */,
-				5079BE90277A6841002D8A7D /* Main.storyboard */,
+				5079BEA1277CAB94002D8A7D /* LocationDetailsViewController.swift */,
+				5079BEA3277CE5DC002D8A7D /* CategoryPickerViewController.swift */,
 				5079BE96277A6842002D8A7D /* Assets.xcassets */,
+				5079BE90277A6841002D8A7D /* Main.storyboard */,
 				5079BE98277A6842002D8A7D /* LaunchScreen.storyboard */,
 				5079BE9B277A6842002D8A7D /* Info.plist */,
 				5079BE93277A6841002D8A7D /* MyLocations.xcdatamodeld */,
@@ -141,7 +147,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5079BEA4277CE5DC002D8A7D /* CategoryPickerViewController.swift in Sources */,
 				5079BE8F277A6841002D8A7D /* CurrentLocationViewController.swift in Sources */,
+				5079BEA2277CAB94002D8A7D /* LocationDetailsViewController.swift in Sources */,
 				5079BE8B277A6841002D8A7D /* AppDelegate.swift in Sources */,
 				5079BE95277A6841002D8A7D /* MyLocations.xcdatamodeld in Sources */,
 				5079BE8D277A6841002D8A7D /* SceneDelegate.swift in Sources */,

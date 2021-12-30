@@ -36,6 +36,30 @@ class CurrentLocationViewController: UIViewController {
         updateLabels()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TagLocation" {
+            let controller = segue.destination as! LocationDetailsViewController
+            controller.coordinates = CLLocationCoordinate2D(
+                latitude: currentLocation!.coordinate.latitude,
+                longitude: currentLocation!.coordinate.longitude)
+            controller.date = Date()
+            controller.address = ""
+            if let placemark = lastPlacemark {
+                controller.address = getAddressFromPlacemark(from: placemark)
+            }
+        }
+    }
+    
     func updateLabels() {
         // If we have a location, update UI
         if let location = currentLocation {
@@ -50,7 +74,7 @@ class CurrentLocationViewController: UIViewController {
                 longitude)
             addressLabel.text = ""
             
-            tagButton.isEnabled = true
+            tagButton.isHidden = false
             
             let addressResult: String
             if let placemark = lastPlacemark {
@@ -71,6 +95,7 @@ class CurrentLocationViewController: UIViewController {
             latitudeLabel.text = ""
             longitudeLabel.text = ""
             addressLabel.text = ""
+            tagButton.isHidden = true
             
             let statusMessage: String
             /*

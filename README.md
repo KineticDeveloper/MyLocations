@@ -38,7 +38,8 @@ Setup instance variables to store current state, errors, and results.
 -  The updateLabels() function is called whenever we need to update the UI and it looks at the state of the instance variables to decide what to display
 
 ---
+# Misc
 
-
+- Unwind segues will not trigger viewDidLoad()
 
 
