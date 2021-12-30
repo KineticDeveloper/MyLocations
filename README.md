@@ -82,7 +82,7 @@ Draw an image:
 
 Draw a text:
 
-- Make an `NSAttributedString.Key` array to instruct what the text should look like. e.g. 
+- Make an `NSAttributedString.Key` dict to instruct what the text should look like. e.g. 
 
 	```
 	let attribs = [ 
@@ -98,7 +98,7 @@ Draw a text:
 	```
 	
 - same as image, get the top left CGPoint where the text should be drawn.
-- Then call `text.draw(at: CGPoint, withAttributes: [NSAttributedString.Key])`
+- Then call `text.draw(at: CGPoint, withAttributes: [NSAttributedString.Key: Value])`
 
 
 ---
