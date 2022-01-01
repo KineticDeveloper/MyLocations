@@ -118,3 +118,23 @@ Draw a text:
 ### Remove hud from parent
 
 - call `removeFromSuperView()`
+
+---
+
+### Using CoreData
+
+- Create an entity
+- Create a `NSManagedObjectContext` at a high level such as AppDelegate or SceneDelegate
+- Permeate the context down to views that needs saving and fetching. 
+
+##### To Save:
+ 
+- Create and load up an entity object
+- Call `managedObjectContext.save()`
+
+##### To Load:
+	
+- Create an `NSFetchRequest<Entity>()`
+- Give it a sort descriptor `NSSortDescriptor`
+	- `request.sortDescriptor = [sortDescriptor]`
+- Assign the output of the fetch operation in an instance variable, in a do-try-catch block

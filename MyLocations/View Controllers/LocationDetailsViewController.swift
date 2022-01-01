@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 private let dateFormat: DateFormatter = {
     let formatter = DateFormatter()
@@ -24,12 +25,18 @@ class LocationDetailsViewController: UITableViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    // MARK: Instance Variables
+    
+    var managedObjectContext: NSManagedObjectContext!
+    
     var coordinates = CLLocationCoordinate2D(
         latitude: 0.0,
         longitude: 0.0)
     var address: String!
     var date: Date!
     var selectedCategory = "No Category"
+    
+    // MARK: View Lifecycle
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PickCategory" {
@@ -69,6 +76,8 @@ class LocationDetailsViewController: UITableViewController {
         
     }
     
+    // MARK: - User Actions
+    
     @objc func resignKeyboard(_ gestureRecognizer: UIGestureRecognizer) {
         let point = gestureRecognizer.location(in: tableView)
         let indexPath = tableView.indexPathForRow(at: point)
@@ -84,15 +93,30 @@ class LocationDetailsViewController: UITableViewController {
         let hud = HudView.hud(inView: mainView, animated: true)
         hud.text = "Tagged"
         
-        runAfter(seconds: 0.6) {
-            hud.exit()
-            self.navigationController?.popViewController(animated: true)
+        let location = Location(context: managedObjectContext)
+        location.locationDescription = descriptionTextView.text
+        location.category = selectedCategory
+        location.latitude = coordinates.latitude
+        location.longitude = coordinates.longitude
+        location.address = address
+        location.date = date
+        
+        do {
+            try managedObjectContext.save()
+            runAfter(seconds: 0.6) {
+                hud.exit()
+                self.navigationController?.popViewController(animated: true)
+            }
+        } catch {
+            fatalError("Error: \(error)")
         }
     }
     
     @IBAction func cancel() {
         navigationController?.popViewController(animated: true)
     }
+    
+    // MARK: Table View
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 0 || indexPath.section == 1 {

@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import CoreData
 
 class CurrentLocationViewController: UIViewController {
 
@@ -16,6 +17,8 @@ class CurrentLocationViewController: UIViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var getLocationButton: UIButton!
+    
+    var managedObjectContext: NSManagedObjectContext!
     
     // GPS Coordinates
     let locationManager = CLLocationManager()
@@ -49,11 +52,12 @@ class CurrentLocationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "TagLocation" {
             let controller = segue.destination as! LocationDetailsViewController
+            controller.managedObjectContext = managedObjectContext
             controller.coordinates = CLLocationCoordinate2D(
                 latitude: currentLocation!.coordinate.latitude,
                 longitude: currentLocation!.coordinate.longitude)
             controller.date = Date()
-            controller.address = ""
+            controller.address = "No Address Found"
             if let placemark = lastPlacemark {
                 controller.address = getAddressFromPlacemark(from: placemark)
             }
