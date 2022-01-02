@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 
 extension Location {
@@ -25,6 +26,18 @@ extension Location {
 
 }
 
-extension Location : Identifiable {
-
+extension Location : Identifiable, MKAnnotation {
+    public var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(
+            latitude: latitude,
+            longitude: longitude)
+    }
+    
+    public var title: String? {
+        return locationDescription
+    }
+    
+    public var subtitle: String? {
+        return category
+    }
 }

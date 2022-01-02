@@ -231,3 +231,45 @@ extension LocationsViewController: NSFetchedResultsControllerDelegate {
     }
 }
 ```
+
+---
+
+### Making a custom MapView
+
+- Start by embedding a MapView in a standard ViewController, then in a navigation controller
+- Make a MapViewController class subclassing UIViewController
+- Add mapView IBOutlet and create a managedObjectContext. 
+- Create methods to display either user location / tagged locations
+- Setup MapViewDelegate as self
+- Setup an instance variable to store fetched locations from context
+- Conform Location to MKAnnotation, so we can call mapView.addAnnotations() on locations to display them. 
+
+- Write a method to find a region to display current locations
+
+##### Custom Location Pins
+
+- In Delegate:
+	- deque reuseable annotations, if nil, create a new MKPinAnnotationView
+	- Give it a right accessory button, and add to it a target to a function that lets you segue into editing location details. 
+	- Give the button a tag of the index of the current annotation(location) in our fetched locations
+
+- Add the new target function and create a custom performSegue in it. 
+- Create the prepare(for segue:...) accordingly that sets up the location to edit in the location details screen. 
+
+#### Using Notifications to handle updates to context
+
+```
+var managedObjectContext: NSManagedObjectContext! {
+  didSet {
+    NotificationCenter.default.addObserver(
+      forName: Notification.Name.NSManagedObjectContextObjectsDidChange,
+      object: managedObjectContext,
+      queue: OperationQueue.main
+    ) { _ in
+      if self.isViewLoaded {
+        self.updateLocations()
+      }
+    }
+  }
+}
+```
