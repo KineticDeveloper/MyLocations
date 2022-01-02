@@ -138,3 +138,96 @@ Draw a text:
 - Give it a sort descriptor `NSSortDescriptor`
 	- `request.sortDescriptor = [sortDescriptor]`
 - Assign the output of the fetch operation in an instance variable, in a do-try-catch block
+
+### Using NSFetchedResultsController
+
+##### Create one as follows:
+
+```
+lazy var fetchedResultController: NSFetchedResultsController<Location> = {
+
+			// Setup Fetch Request
+        let fetchRequest = NSFetchRequest<Location>(entityName: "Location")
+        let dateDescriptor = NSSortDescriptor(
+            key: "date",
+            ascending: true)
+        let categoryDescriptor = NSSortDescriptor(
+            key: "category",
+            ascending: true
+        )
+        fetchRequest.sortDescriptors = [
+            categoryDescriptor,
+            dateDescriptor,
+        ]
+        
+        fetchRequest.fetchBatchSize = 20
+        
+        // Initialize the fetchedResultController using the fetch request
+        let fetchedResultController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: "category",
+            cacheName: "Locations")
+        
+        fetchedResultController.delegate = self
+        return fetchedResultController
+    }()
+```
+
+##### Delegate Methods (semi-boiler plate to use with tableViews)
+
+```
+extension LocationsViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("fetchController will change content")
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            if let cell = tableView.cellForRow(at: indexPath!) as? LocationCell {
+                let location = controller.object(at: indexPath!) as! Location
+                cell.configure(with: location)
+            }
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+            
+        @unknown default:
+            print("*** NSFetchedResults unknown type")
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
+        switch type {
+        case.insert:
+            tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case.delete:
+            tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .update:
+          print("*** NSFetchedResultsChangeUpdate (section)")
+        case .move:
+          print("*** NSFetchedResultsChangeMove (section)")
+        @unknown default:
+          print("*** NSFetchedResults unknown type")
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("*** controllerDidChangeContent")
+        tableView.endUpdates()
+    }
+}
+```

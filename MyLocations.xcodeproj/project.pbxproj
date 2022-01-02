@@ -19,6 +19,9 @@
 		5079BEA6277E177F002D8A7D /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEA5277E177F002D8A7D /* HudView.swift */; };
 		5079BEA8277E2BE7002D8A7D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEA7277E2BE7002D8A7D /* Utils.swift */; };
 		5079BEAF2780BAED002D8A7D /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEAE2780BAED002D8A7D /* LocationsViewController.swift */; };
+		5079BEB127810E45002D8A7D /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEB027810E45002D8A7D /* LocationCell.swift */; };
+		5079BEB82781190A002D8A7D /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEB62781190A002D8A7D /* Location+CoreDataClass.swift */; };
+		5079BEB92781190A002D8A7D /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEB72781190A002D8A7D /* Location+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		5079BEA5277E177F002D8A7D /* HudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		5079BEA7277E2BE7002D8A7D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5079BEAE2780BAED002D8A7D /* LocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewController.swift; sourceTree = "<group>"; };
+		5079BEB027810E45002D8A7D /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		5079BEB62781190A002D8A7D /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5079BEB72781190A002D8A7D /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +84,8 @@
 				5079BE98277A6842002D8A7D /* LaunchScreen.storyboard */,
 				5079BE9B277A6842002D8A7D /* Info.plist */,
 				5079BE93277A6841002D8A7D /* MyLocations.xcdatamodeld */,
+				5079BEB62781190A002D8A7D /* Location+CoreDataClass.swift */,
+				5079BEB72781190A002D8A7D /* Location+CoreDataProperties.swift */,
 			);
 			path = MyLocations;
 			sourceTree = "<group>";
@@ -89,6 +97,7 @@
 				5079BEA1277CAB94002D8A7D /* LocationDetailsViewController.swift */,
 				5079BEA3277CE5DC002D8A7D /* CategoryPickerViewController.swift */,
 				5079BEAE2780BAED002D8A7D /* LocationsViewController.swift */,
+				5079BEB027810E45002D8A7D /* LocationCell.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -170,8 +179,11 @@
 				5079BEA2277CAB94002D8A7D /* LocationDetailsViewController.swift in Sources */,
 				5079BEA8277E2BE7002D8A7D /* Utils.swift in Sources */,
 				5079BE8B277A6841002D8A7D /* AppDelegate.swift in Sources */,
+				5079BEB127810E45002D8A7D /* LocationCell.swift in Sources */,
 				5079BE95277A6841002D8A7D /* MyLocations.xcdatamodeld in Sources */,
+				5079BEB92781190A002D8A7D /* Location+CoreDataProperties.swift in Sources */,
 				5079BEA6277E177F002D8A7D /* HudView.swift in Sources */,
+				5079BEB82781190A002D8A7D /* Location+CoreDataClass.swift in Sources */,
 				5079BE8D277A6841002D8A7D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

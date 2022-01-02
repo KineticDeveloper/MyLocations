@@ -29,12 +29,27 @@ class LocationDetailsViewController: UITableViewController {
     
     var managedObjectContext: NSManagedObjectContext!
     
+    var locationToEdit: Location? {
+        didSet {
+            if let location = locationToEdit {
+                self.descriptionText = location.locationDescription
+                self.selectedCategory = location.category
+                self.coordinates = CLLocationCoordinate2DMake(location.latitude,
+                                                              location.longitude)
+                self.address = location.address
+                self.date = location.date
+                isInEditMode = true
+            }
+        }
+    }
+    var isInEditMode = false
     var coordinates = CLLocationCoordinate2D(
         latitude: 0.0,
         longitude: 0.0)
     var address: String!
     var date: Date!
     var selectedCategory = "No Category"
+    var descriptionText = ""
     
     // MARK: View Lifecycle
     
@@ -55,6 +70,8 @@ class LocationDetailsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = isInEditMode ? "Edit Location" : "Tag Location"
+        self.descriptionTextView.text = descriptionText
         self.latitudeLabel.text = String.init(format: "%.8f",
                                          coordinates.latitude)
         self.longitudeLabel.text = String.init(format: "%.8f",
@@ -91,9 +108,12 @@ class LocationDetailsViewController: UITableViewController {
     @IBAction func done() {
         guard let mainView = navigationController?.parent?.view else { return }
         let hud = HudView.hud(inView: mainView, animated: true)
-        hud.text = "Tagged"
         
-        let location = Location(context: managedObjectContext)
+        hud.text = isInEditMode ? "Updated" : "Tagged"
+        
+        let location = isInEditMode ?
+                        locationToEdit! :
+                        Location(context: managedObjectContext)
         location.locationDescription = descriptionTextView.text
         location.category = selectedCategory
         location.latitude = coordinates.latitude
@@ -110,6 +130,8 @@ class LocationDetailsViewController: UITableViewController {
         } catch {
             fatalError("Error: \(error)")
         }
+        
+        isInEditMode = false
     }
     
     @IBAction func cancel() {

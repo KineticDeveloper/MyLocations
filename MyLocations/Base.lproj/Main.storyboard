@@ -124,37 +124,41 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="65" id="oq4-Yg-hzh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="65" id="oq4-Yg-hzh" customClass="LocationCell" customModule="MyLocations" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.666666030883789" width="375" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oq4-Yg-hzh" id="0NG-Iv-TUN">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uce-2x-EV9">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uce-2x-EV9">
                                             <rect key="frame" x="16" y="11" width="343" height="21"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iib-VM-MBf">
-                                            <rect key="frame" x="16" y="40" width="343" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iib-VM-MBf">
+                                            <rect key="frame" x="25" y="40" width="343" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.50430484689999999" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Iib-VM-MBf" firstAttribute="leading" secondItem="0NG-Iv-TUN" secondAttribute="leading" constant="16" id="BAE-gO-Umc"/>
-                                        <constraint firstItem="uce-2x-EV9" firstAttribute="leading" secondItem="0NG-Iv-TUN" secondAttribute="leadingMargin" id="CL0-hh-Tbs"/>
-                                        <constraint firstItem="Iib-VM-MBf" firstAttribute="top" secondItem="uce-2x-EV9" secondAttribute="bottom" constant="8" symbolic="YES" id="IG1-I5-hKa"/>
-                                        <constraint firstAttribute="trailing" secondItem="Iib-VM-MBf" secondAttribute="trailing" constant="16" id="S0l-um-RJa"/>
-                                        <constraint firstItem="uce-2x-EV9" firstAttribute="top" secondItem="0NG-Iv-TUN" secondAttribute="topMargin" id="YXl-iJ-s8o"/>
-                                        <constraint firstItem="uce-2x-EV9" firstAttribute="trailing" secondItem="0NG-Iv-TUN" secondAttribute="trailingMargin" id="c63-pe-uZC"/>
-                                        <constraint firstAttribute="bottom" secondItem="Iib-VM-MBf" secondAttribute="bottom" constant="8" id="mxV-cc-d8X"/>
-                                        <constraint firstItem="Iib-VM-MBf" firstAttribute="top" secondItem="uce-2x-EV9" secondAttribute="bottom" constant="8" symbolic="YES" id="o4b-wS-cQt"/>
+                                        <constraint firstItem="uce-2x-EV9" firstAttribute="leading" secondItem="0NG-Iv-TUN" secondAttribute="leadingMargin" id="4II-VU-hVD"/>
+                                        <constraint firstItem="Iib-VM-MBf" firstAttribute="leading" secondItem="0NG-Iv-TUN" secondAttribute="leading" constant="25" id="JoP-Q5-M1d"/>
+                                        <constraint firstAttribute="trailing" secondItem="Iib-VM-MBf" secondAttribute="trailing" constant="7" id="Oyx-Lh-mEK"/>
+                                        <constraint firstItem="Iib-VM-MBf" firstAttribute="top" secondItem="uce-2x-EV9" secondAttribute="bottom" constant="8" symbolic="YES" id="Uqq-uy-dnX"/>
+                                        <constraint firstItem="uce-2x-EV9" firstAttribute="trailing" secondItem="0NG-Iv-TUN" secondAttribute="trailingMargin" id="oIQ-ph-V7l"/>
+                                        <constraint firstAttribute="bottom" secondItem="Iib-VM-MBf" secondAttribute="bottom" constant="8" id="sUn-QQ-S79"/>
+                                        <constraint firstItem="uce-2x-EV9" firstAttribute="top" secondItem="0NG-Iv-TUN" secondAttribute="topMargin" id="tYD-1h-18i"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="addressLabel" destination="Iib-VM-MBf" id="z5y-VN-cRS"/>
+                                    <outlet property="descriptionLabel" destination="uce-2x-EV9" id="Eco-u3-DAO"/>
+                                    <segue destination="u53-IJ-P9O" kind="show" identifier="EditLocation" id="Scw-ks-Bz3"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -257,15 +261,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="350.33333333333331" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oar-K4-Cxp">
-                                                    <rect key="frame" x="16" y="14.333333333333336" width="28" height="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oar-K4-Cxp">
+                                                    <rect key="frame" x="16" y="14" width="86" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Oar-K4-Cxp" secondAttribute="trailing" constant="306.5" id="74b-gi-4kc"/>
+                                                <constraint firstAttribute="trailing" secondItem="Oar-K4-Cxp" secondAttribute="trailing" constant="248.33333333333331" id="74b-gi-4kc"/>
                                                 <constraint firstItem="Oar-K4-Cxp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tdn-Tz-aRe" secondAttribute="leadingMargin" id="Hd8-ej-4Og"/>
                                                 <constraint firstItem="Oar-K4-Cxp" firstAttribute="centerY" secondItem="tdn-Tz-aRe" secondAttribute="centerY" id="V0q-1j-EAI"/>
                                             </constraints>
@@ -409,7 +413,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aER-Q7-lQK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2553.6231884057975" y="83.705357142857139"/>
+            <point key="canvasLocation" x="2660" y="461.82266009852219"/>
         </scene>
         <!--Category Picker View Controller-->
         <scene sceneID="hrg-7z-TUF">
@@ -442,7 +446,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dRQ-vQ-IEs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="nlc-Nn-WIL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3380" y="84"/>
+            <point key="canvasLocation" x="3487" y="462"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PFy-yc-Vyc">
@@ -483,6 +487,9 @@
             <point key="canvasLocation" x="880" y="84"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Scw-ks-Bz3"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
