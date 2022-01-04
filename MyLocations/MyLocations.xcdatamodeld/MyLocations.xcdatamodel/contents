@@ -7,8 +7,9 @@
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="locationDescription" attributeType="String"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="photoID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-45" positionY="0" width="128" height="119"/>
+        <element name="Location" positionX="-45" positionY="0" width="128" height="134"/>
     </elements>
 </model>

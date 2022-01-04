@@ -23,6 +23,8 @@
 		5079BEB82781190A002D8A7D /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEB62781190A002D8A7D /* Location+CoreDataClass.swift */; };
 		5079BEB92781190A002D8A7D /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEB72781190A002D8A7D /* Location+CoreDataProperties.swift */; };
 		5079BEBB27823532002D8A7D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEBA27823532002D8A7D /* MapViewController.swift */; };
+		5079BEBE278378E8002D8A7D /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEBD278378E8002D8A7D /* UIImage+Resize.swift */; };
+		5079BEC027839F29002D8A7D /* String+add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5079BEBF27839F29002D8A7D /* String+add.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		5079BEB62781190A002D8A7D /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5079BEB72781190A002D8A7D /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5079BEBA27823532002D8A7D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		5079BEBD278378E8002D8A7D /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		5079BEBF27839F29002D8A7D /* String+add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+add.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +84,7 @@
 				5079BE8C277A6841002D8A7D /* SceneDelegate.swift */,
 				5079BEA9277E2C9F002D8A7D /* View Controllers */,
 				5079BEA5277E177F002D8A7D /* HudView.swift */,
-				5079BEA7277E2BE7002D8A7D /* Utils.swift */,
+				5079BEBC278378D8002D8A7D /* Util */,
 				5079BE96277A6842002D8A7D /* Assets.xcassets */,
 				5079BE90277A6841002D8A7D /* Main.storyboard */,
 				5079BE98277A6842002D8A7D /* LaunchScreen.storyboard */,
@@ -103,6 +107,16 @@
 				5079BEBA27823532002D8A7D /* MapViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		5079BEBC278378D8002D8A7D /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				5079BEA7277E2BE7002D8A7D /* Utils.swift */,
+				5079BEBF27839F29002D8A7D /* String+add.swift */,
+				5079BEBD278378E8002D8A7D /* UIImage+Resize.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +197,8 @@
 				5079BEA8277E2BE7002D8A7D /* Utils.swift in Sources */,
 				5079BE8B277A6841002D8A7D /* AppDelegate.swift in Sources */,
 				5079BEBB27823532002D8A7D /* MapViewController.swift in Sources */,
+				5079BEC027839F29002D8A7D /* String+add.swift in Sources */,
+				5079BEBE278378E8002D8A7D /* UIImage+Resize.swift in Sources */,
 				5079BEB127810E45002D8A7D /* LocationCell.swift in Sources */,
 				5079BE95277A6841002D8A7D /* MyLocations.xcdatamodeld in Sources */,
 				5079BEB92781190A002D8A7D /* Location+CoreDataProperties.swift in Sources */,
@@ -340,13 +356,17 @@
 				DEVELOPMENT_TEAM = XDPTRV2722;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyLocations/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to camera to update locations";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app lets you keep track of interesting places. It needs access to the GPS coordinates for your location.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to photos to update locations";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,13 +390,17 @@
 				DEVELOPMENT_TEAM = XDPTRV2722;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyLocations/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to camera to update locations";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app lets you keep track of interesting places. It needs access to the GPS coordinates for your location.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to photos to update locations";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

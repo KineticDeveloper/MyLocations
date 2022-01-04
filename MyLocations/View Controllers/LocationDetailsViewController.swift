@@ -9,21 +9,17 @@ import UIKit
 import CoreLocation
 import CoreData
 
-private let dateFormat: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .short
-    return formatter
-}()
-
 class LocationDetailsViewController: UITableViewController {
 
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var addImageLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
     
     // MARK: Instance Variables
     
@@ -38,11 +34,12 @@ class LocationDetailsViewController: UITableViewController {
                                                               location.longitude)
                 self.address = location.address
                 self.date = location.date
-                isInEditMode = true
             }
         }
     }
-    var isInEditMode = false
+    var isInEditMode: Bool {
+        locationToEdit != nil
+    }
     var coordinates = CLLocationCoordinate2D(
         latitude: 0.0,
         longitude: 0.0)
@@ -50,6 +47,8 @@ class LocationDetailsViewController: UITableViewController {
     var date: Date!
     var selectedCategory = "No Category"
     var descriptionText = ""
+    
+    var image: UIImage?
     
     // MARK: View Lifecycle
     
@@ -70,6 +69,7 @@ class LocationDetailsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        descriptionTextView.layer.cornerRadius = 10
         title = isInEditMode ? "Edit Location" : "Tag Location"
         self.descriptionTextView.text = descriptionText
         self.latitudeLabel.text = String.init(format: "%.8f",
@@ -78,6 +78,13 @@ class LocationDetailsViewController: UITableViewController {
                                          coordinates.longitude)
         self.addressLabel.text = address
         self.dateLabel.text = dateFormat.string(from: date)
+        if let location = locationToEdit {
+            if location.hasPhoto {
+                if let image = location.photoImage {
+                    self.showImage(image)
+                }
+            }
+        }
         
         let gestureRecognizer = UITapGestureRecognizer(
             target: self,
@@ -121,6 +128,25 @@ class LocationDetailsViewController: UITableViewController {
         location.address = address
         location.date = date
         
+        if !isInEditMode { location.photoID = nil }
+        
+        if let image = image {
+            if !location.hasPhoto {
+                let id = Location.nextPhotoID()
+                location.photoID = id as NSNumber
+            }
+            
+            if let data = image.jpegData(compressionQuality: 0.5) {
+                let url = location.photoURL
+                print(url)
+                do {
+                    try data.write(to: url, options: .atomic)
+                } catch {
+                    print("Error Saving Image to URL: \(error.localizedDescription)")
+                }
+            }
+        }
+        
         do {
             try managedObjectContext.save()
             runAfter(seconds: 0.6) {
@@ -130,8 +156,6 @@ class LocationDetailsViewController: UITableViewController {
         } catch {
             fatalError("Error: \(error)")
         }
-        
-        isInEditMode = false
     }
     
     @IBAction func cancel() {
@@ -152,5 +176,96 @@ class LocationDetailsViewController: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 0 {
             self.descriptionTextView.becomeFirstResponder()
         }
+        
+        if indexPath.section == 1 && indexPath.row == 0 {
+            choosePhoto()
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+}
+
+// MARK: - ImagePicker
+extension LocationDetailsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func choosePhoto() {
+        if true || UIImagePickerController.isSourceTypeAvailable(.camera) {
+            presentChooseImageActions()
+        } else {
+            choosePhotoFromImageLibrary()
+        }
+    }
+    
+    func presentChooseImageActions() {
+        let alert = UIAlertController(
+            title: "Choose Image From:",
+            message: nil,
+            preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: nil)
+        
+        let fromLibraryAction = UIAlertAction(
+            title: "Photo Library",
+            style: .default) { _ in
+                self.choosePhotoFromImageLibrary()
+            }
+        
+        let fromCameraAction = UIAlertAction(
+            title: "Camera",
+            style: .default) { _ in
+                self.choosePhotoFromCamera()
+            }
+    
+        alert.addAction(cancelAction)
+        alert.addAction(fromLibraryAction)
+        alert.addAction(fromCameraAction)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    func choosePhotoFromImageLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func choosePhotoFromCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        dismiss(animated: true) {
+            if let image = info[.editedImage] as? UIImage {
+                self.image = image
+                self.showImage(image)
+            }
+        }
+    }
+    
+    func showImage(_ image: UIImage) {
+        let aspectRatio = image.size.width / image.size.height
+        
+        imageView.image = image
+        imageHeight.constant = 260 / aspectRatio
+        imageView.layer.cornerRadius = imageHeight.constant / 4
+        imageView.clipsToBounds = true
+        imageView.isHidden = false
+        addImageLabel.text = ""
+        tableView.reloadData()
     }
 }

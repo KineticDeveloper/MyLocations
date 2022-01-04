@@ -11,7 +11,7 @@ import CoreData
 
 class LocationsViewController: UITableViewController {
     
-//    var locations: [Location] = []
+    // MARK: - Loading Data
     var managedObjectContext: NSManagedObjectContext!
     
     lazy var fetchedResultController: NSFetchedResultsController<Location> = {
@@ -52,6 +52,7 @@ class LocationsViewController: UITableViewController {
         }
     }
     
+    // MARK: - Segue / ViewDidLoad
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditLocation" {
             let controller = segue.destination as! LocationDetailsViewController
@@ -68,6 +69,8 @@ class LocationsViewController: UITableViewController {
         performFetch()
         navigationItem.rightBarButtonItem = editButtonItem
     }
+    
+    // MARK: - TableView
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultController.sections!.count
@@ -87,12 +90,13 @@ class LocationsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetchedResultController.sections![section].name
+        return fetchedResultController.sections![section].name.uppercased()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let location = fetchedResultController.object(at: indexPath)
+            location.removeImage()
             managedObjectContext.delete(location)
             do {
                 try managedObjectContext.save()
@@ -102,6 +106,8 @@ class LocationsViewController: UITableViewController {
         }
     }
 }
+
+// MARK: - NSFetchedResultControllerDelegate
 
 extension LocationsViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

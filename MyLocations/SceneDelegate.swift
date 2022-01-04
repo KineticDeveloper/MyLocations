@@ -17,14 +17,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabController = window!.rootViewController as! UITabBarController
         if let tabChildren = tabController.viewControllers {
             var navController = tabChildren[0] as! UINavigationController
+            navController.tabBarItem.image = UIImage(systemName: "location.circle")
             let curLocationController = navController.viewControllers.first as! CurrentLocationViewController
             curLocationController.managedObjectContext = managedObjectContext
             
             navController = tabChildren[1] as! UINavigationController
+            navController.tabBarItem.image = UIImage(systemName: "list.bullet.rectangle.portrait")
             let locationsController = navController.viewControllers.first as! LocationsViewController
             locationsController.managedObjectContext = managedObjectContext
             
             navController = tabChildren[2] as! UINavigationController
+            navController.tabBarItem.image = UIImage(systemName: "mappin.circle")
             let mapController = navController.viewControllers.first as! MapViewController
             mapController.managedObjectContext = managedObjectContext
         }

@@ -29,11 +29,14 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationItem.leftBarButtonItem?.image = UIImage(systemName: "location.circle.fill")
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "mappin.circle.fill")
         updateLocations()
         if !locations.isEmpty {
             showTaggedLocation()
         }
+        
+        mapView.delegate = self
     }
     
     func updateLocations() {
@@ -145,9 +148,9 @@ extension MapViewController: MKMapViewDelegate {
             markerAnnotationView.canShowCallout = true
             markerAnnotationView.animatesWhenAdded = false
             markerAnnotationView.markerTintColor = UIColor(
-                red: 0.32,
-                green: 0.82,
-                blue: 0.4,
+                red: 0.82,
+                green: 0.32,
+                blue: 0.62,
                 alpha: 1)
             
             let rightButton = UIButton(type: .detailDisclosure)
